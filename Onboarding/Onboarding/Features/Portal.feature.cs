@@ -667,7 +667,7 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.DescriptionAttribute("G-Edit contact details")]
         [NUnit.Framework.CategoryAttribute("Contact")]
         [NUnit.Framework.TestCaseAttribute("Binh", "Nguyen", "Part Time", "Less than 30hours a week", "Less than $500 per month", null)]
-        [NUnit.Framework.TestCaseAttribute("Ben", "Nguyeen", "Full Time", "More than 30hours a week", "Between $500 and $1000 per month", null)]
+        [NUnit.Framework.TestCaseAttribute("Binh", "Nguyeen", "Full Time", "More than 30hours a week", "Between $500 and $1000 per month", null)]
         [NUnit.Framework.TestCaseAttribute("Binh", "Nguyen", "Full Time", "As needed", "More than $1000 per month", null)]
         public void G_EditContactDetails(string firstName, string lastName, string availability, string hours, string earnTarget, string[] exampleTags)
         {
