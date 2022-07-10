@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Onboarding.Utilities
 {
-    internal class WaitHelpers
+    public class WaitHelpers
     {
         // Generic function to wait for element to be clickable
         public static void WaitToBeClickable(IWebDriver driver, string locator, string locatorValue, int seconds)
