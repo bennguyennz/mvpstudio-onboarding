@@ -78,13 +78,13 @@ namespace Onboarding.Pages.ProfilePages
             string xpNameValue = "firstName";
             WaitHelpers.WaitToBeClickable(driver, "Name", xpNameValue, 3);
             IWebElement firstName = driver.FindElement(By.Name(xpNameValue));
-
+            firstName.Click();
             firstName.Clear();
             firstName.SendKeys(strFirstName);
 
             //edit last name
             IWebElement lastName = driver.FindElement(By.Name("lastName"));
-            firstName.Click();
+            lastName.Click();
             lastName.Clear();
             lastName.SendKeys(strLastName);
 
@@ -128,25 +128,33 @@ namespace Onboarding.Pages.ProfilePages
 
         public string GetFullName(IWebDriver driver)
         {
-            IWebElement fullName = driver.FindElement(By.XPath("//div[@class='title']"));
+            string xpValue = "//div[@class='title']";
+            WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 3);
+            IWebElement fullName = driver.FindElement(By.XPath(xpValue));
             return fullName.Text;
         }
 
         public string GetAvailabilityType(IWebDriver driver)
         {
-            IWebElement availabiltyType = driver.FindElement(By.XPath("//div[@class='ui list']/div[2]/div/span"));
+            string xpValue = "//div[@class='ui list']/div[2]/div/span";
+            WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 3);
+            IWebElement availabiltyType = driver.FindElement(By.XPath(xpValue));
             return availabiltyType.Text;
         }
 
         public string GetAvailityHour(IWebDriver driver)
         {
-            IWebElement availabiltyHour = driver.FindElement(By.XPath("//div[@class='ui list']/div[3]/div/span"));
+            string xpValue = "//div[@class='ui list']/div[3]/div/span";
+            WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 3);
+            IWebElement availabiltyHour = driver.FindElement(By.XPath(xpValue));
             return availabiltyHour.Text;
         }
 
         public string GetAvailityTarget(IWebDriver driver)
         {
-            IWebElement availabiltyTarget = driver.FindElement(By.XPath("//div[@class='ui list']/div[4]/div/span"));
+            string xpValue = "//div[@class='ui list']/div[4]/div/span";
+            WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 3);
+            IWebElement availabiltyTarget = driver.FindElement(By.XPath(xpValue));
             return availabiltyTarget.Text;
         }
 
