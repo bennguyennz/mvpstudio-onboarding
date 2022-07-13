@@ -11,6 +11,27 @@ namespace Onboarding.StepDefinitions
     [Binding]
     public class OtherStepDefinitions : CommonDriver
     {
+        Other OtherObj;
+        LoginPage LoginPageObj;
+
+        [Given(@"I signed into the portal successfully")]
+        public void GivenISignedIntoThePortalSuccessfully()
+        {
+            //Open Chrome browser
+            driver = new ChromeDriver();
+            OtherObj = new Other(driver);
+            //signin
+            LoginPageObj = new LoginPage(driver);
+            LoginPageObj.LogInActions();
+        }
+
+        [Then(@"I am able to see my profile page")]
+        public void ThenIAmAbleToSeeMyProfilePage()
+        {
+            string welcomeText = OtherObj.getWecomeText();
+            Assert.That(welcomeText == "Hi Binh" | welcomeText == "Hi", "Actual welcome text and expected welcome text do not match");
+        }
+
         [After]
         public void Dispose()
         {
@@ -18,26 +39,6 @@ namespace Onboarding.StepDefinitions
             {
                 driver.Close();
             }
-        }
-
-        Other OtherObj = new Other();
-
-        [Given(@"I signed into the portal successfully")]
-        public void GivenISignedIntoThePortalSuccessfully()
-        {
-            //Open Chrome browser
-            driver = new ChromeDriver();
-
-            //signin
-            LoginPage LoginPageObj = new LoginPage();
-            LoginPageObj.LogInActions(driver);
-        }
-
-        [Then(@"I am able to see my profile page")]
-        public void ThenIAmAbleToSeeMyProfilePage()
-        {
-            string welcomeText = OtherObj.getWecomeText(driver);
-            Assert.That(welcomeText == "Hi Binh" | welcomeText == "Hi", "Actual welcome text and expected welcome text do not match");
         }
 
     }

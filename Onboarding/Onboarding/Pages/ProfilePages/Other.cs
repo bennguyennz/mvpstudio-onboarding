@@ -12,13 +12,33 @@ using OpenQA.Selenium.Interactions;
 
 namespace Onboarding.Pages.ProfilePages
 {
+
     public class Other
     {
-        public string getWecomeText(IWebDriver driver)
+        public IWebDriver driver;
+        Other OtherObj;
+
+        public Other(IWebDriver _driver)
         {
-            string wecomeTextXPath = "/html/body/div[1]/div/div[1]/div[2]/div/span";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", wecomeTextXPath, 3);
-            IWebElement welcomeText = driver.FindElement(By.XPath(wecomeTextXPath));
+            this.driver = _driver;
+            
+        }
+        public void OtherStepDefinitions()
+        {
+            OtherObj = new Other(driver);
+        }
+
+        //Finding for elements
+        private IWebElement welcomeText => driver.FindElement(By.XPath(e_wecomeText));
+
+        //element for wait
+        private string e_wecomeText = "/html/body/div[1]/div/div[1]/div[2]/div/span";
+
+
+        public string getWecomeText()
+        {
+
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_wecomeText, 3);
             return welcomeText.Text;
         }
     }

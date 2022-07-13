@@ -12,116 +12,139 @@ namespace Onboarding.Pages.ProfilePages
 {
     public class Certification
     {
-        public void AddCertificate(IWebDriver driver, string certificate, string certificationFrom, string year)
-        {
-            //Wait
-            string xpValue = "//div[@data-tab='fourth']//div[@class ='ui teal button ']";
-            WaitHelpers.WaitToBeClickable(driver, "XPath", xpValue, 5);
+        //Define class with two objects
+        public IWebDriver driver;
+        Certification CertificationObj;
 
+        //Form constructor 1
+        public Certification(IWebDriver _driver)
+        {
+            //initial driver object
+            this.driver = _driver;   
+        }
+
+        //Inintial object and link to constructor 1 by calling method
+        public void CertificationStepDefinitions()
+        {
+            //initial object
+            CertificationObj = new Certification(driver);
+        }
+
+        //Finding elements
+        private IWebElement buttonAddNew => driver.FindElement(By.XPath(e_buttonAddNew));
+        private IWebElement addedCertificate => driver.FindElement(By.Name("certificationName"));
+        private IWebElement addedCertificationFrom => driver.FindElement(By.Name("certificationFrom"));
+        private IWebElement dropdownYear => driver.FindElement(By.Name("certificationYear"));
+        private IWebElement buttonCompleteAdd => driver.FindElement(By.XPath(e_CompleteAdd));
+        private IWebElement certifcate => driver.FindElement(By.XPath(e_certificate));
+        private IWebElement certificationFrom => driver.FindElement(By.XPath(e_certificateFrom));
+        private IWebElement certificationYear => driver.FindElement(By.XPath(e_certificationYear));
+        private IWebElement buttonStartUpdate => driver.FindElement(By.XPath(e_buttonStartUpdate));
+        private IWebElement editedCertificate => driver.FindElement(By.Name("certificationName"));
+        private IWebElement editedCertificationFrom => driver.FindElement(By.Name("certificationFrom"));
+        private IWebElement buttonCompleteUpdate => driver.FindElement(By.XPath(e_buttonCompleteUpdate));
+        private IWebElement buttonDelete => driver.FindElement(By.XPath(e_buttonDelete));
+        private IWebElement message => driver.FindElement(By.XPath(e_message));
+        private IWebElement tabOption => driver.FindElement(By.XPath("//div[@class = 'ui top attached tabular menu']/a[4]"));
+
+        //wait elements
+        private string e_buttonAddNew = "//div[@data-tab='fourth']//div[@class ='ui teal button ']";
+        private string e_certificate = "//div[@data-tab='fourth']/div/div/div/table/tbody[last()]/tr/td[1]";
+        private string e_certificateFrom = "//div[@data-tab='fourth']/div/div/div/table/tbody[last()]/tr/td[2]";
+        private string e_certificationYear = "//div[@data-tab='fourth']/div/div/div/table/tbody[last()]/tr/td[3]";
+        private string e_tab = "//div[@class='ui top attached tabular menu']";
+        private string e_CompleteAdd = "//div[@class='five wide field']/input[1]";
+        private string e_buttonStartUpdate = "//div[@data-tab='fourth']/div/div[2]/div/table/tbody[last()]/tr/td[4]/span[1]";
+        private string e_buttonCompleteUpdate = "//input[@value='Update']";
+        private string e_buttonDelete = "//div[@data-tab='fourth']/div/div[2]/div/table/tbody[last()]/tr/td[4]/span[2]";
+        private string e_message = "//div[@class='ns-box-inner']";
+
+
+        public void AddCertificate(string certificate, string certificationFrom, string year)
+        {
             //click on Add New
-            IWebElement buttonAddNew = driver.FindElement(By.XPath(xpValue));
+            WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonAddNew, 5);
             buttonAddNew.Click();
 
             //Enter Certificate/Award
-            IWebElement addedCertificate = driver.FindElement(By.Name("certificationName"));
             addedCertificate.SendKeys(certificate);
 
             //Enter Certifier
-            IWebElement addedCertificationFrom = driver.FindElement(By.Name("certificationFrom"));
             addedCertificationFrom.SendKeys(certificationFrom);
 
             //Select year
-            var addedYear = new SelectElement(driver.FindElement(By.Name("certificationYear")));
+            var addedYear = new SelectElement(dropdownYear);
             addedYear.SelectByValue(year);
 
             //Click on Add
-            string xpAddValue = "//div[@class='five wide field']/input[1]";
-            WaitHelpers.WaitToBeClickable(driver, "XPath", xpAddValue, 5);
-            IWebElement buttonAdd = driver.FindElement(By.XPath(xpAddValue));
-            buttonAdd.Click();
+            WaitHelpers.WaitToBeClickable(driver, "XPath", e_CompleteAdd, 5);
+            buttonCompleteAdd.Click();
         }
-        public string GetCertificate(IWebDriver driver)
+        public string GetCertificate()
         {
             try
             {
-                //Check on last record
-                string xpValue = "//div[@data-tab='fourth']/div/div/div/table/tbody[last()]/tr/td[1]";
-                IWebElement certifcate = driver.FindElement(By.XPath(xpValue));
-                WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 5);
-
+                //Get text from last record
+                WaitHelpers.WaitToBeVisible(driver, "XPath", e_certificate, 5);
                 return certifcate.Text;
             }
             catch (Exception)
             {
-                return "Certificate not found";
+                return "Certificate element not found";
             }
         }
 
-        public string GetCertificationFrom(IWebDriver driver)
+        public string GetCertificationFrom()
         {
             try
             {
                 //Check on last record
-                string xpValue = "//div[@data-tab='fourth']/div/div/div/table/tbody[last()]/tr/td[2]";
-                IWebElement certificationFrom = driver.FindElement(By.XPath(xpValue));
-                WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 5);
-
+                WaitHelpers.WaitToBeVisible(driver, "XPath", e_certificateFrom, 5);
                 return certificationFrom.Text;
             }
             catch (Exception)
             {
-                return "Locator not found";
+                return "Certificate element not found";
             }
         }
 
-        public string GetCertificationYear(IWebDriver driver)
+        public string GetCertificationYear()
         {
             try
             {
                 //Check on last record
-                string xpValue = "//div[@data-tab='fourth']/div/div/div/table/tbody[last()]/tr/td[3]";
-                IWebElement certificationYear = driver.FindElement(By.XPath(xpValue));
-                WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 5);
-
+                WaitHelpers.WaitToBeVisible(driver, "XPath", e_certificationYear, 5);
                 return certificationYear.Text;
             }
             catch (Exception)
             {
-                return "Locator not found";
+                return "Certificate element not found";
             }
         }
 
-        public void EditCertificate(IWebDriver driver, string certificate, string certificationFrom, string year)
+        public void EditCertificate(string certificate, string certificationFrom, string year)
         {
             try
             {
-                //Wait
-                string xpValue = "//div[@data-tab='fourth']/div/div[2]/div/table/tbody[last()]/tr/td[4]/span[1]";
-                WaitHelpers.WaitToBeClickable(driver, "XPath", xpValue, 5);
-
                 //click on update
-                IWebElement buttonUpdate = driver.FindElement(By.XPath(xpValue));
-                buttonUpdate.Click();
+                WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonStartUpdate, 5);
+                buttonStartUpdate.Click();
 
                 //Edit Certificate/Award
-                IWebElement editedCertificate = driver.FindElement(By.Name("certificationName"));
                 editedCertificate.Clear();
                 editedCertificate.SendKeys(certificate);
 
                 //Edit Certifier
-                IWebElement editedCertificationFrom = driver.FindElement(By.Name("certificationFrom"));
                 editedCertificationFrom.Clear();
                 editedCertificationFrom.SendKeys(certificationFrom);
 
                 //Edit year
-                var editedYear = new SelectElement(driver.FindElement(By.Name("certificationYear")));
+                var editedYear = new SelectElement(dropdownYear);
                 editedYear.SelectByValue(year);
 
                 //Click on Update
-                string xpUpdateValue = "//input[@value='Update']";
-                WaitHelpers.WaitToBeClickable(driver, "XPath", xpUpdateValue, 5);
-                IWebElement buttonUpdate2 = driver.FindElement(By.XPath(xpUpdateValue));
-                buttonUpdate2.Click();
+                WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonCompleteUpdate, 5);
+                buttonCompleteUpdate.Click();
             }
             catch (Exception ex)
             {
@@ -129,70 +152,43 @@ namespace Onboarding.Pages.ProfilePages
 
             }
         }
-        public void DeleteCertificate(IWebDriver driver, string certificate)
+        public void DeleteCertificate(string certificate)
         {
             try
             {
-                //wait for delete button
-                string xpValue = "//div[@data-tab='fourth']/div/div[2]/div/table/tbody[last()]/tr/td[4]/span[2]";
-                WaitHelpers.WaitToBeClickable(driver, "XPath", xpValue, 3);
-
+                //wait for button delete
+                WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonDelete, 3);
+                
                 //Check if university is matching the university to be deleted
-                string deletedCertificate = GetCertificate(driver);
+                string deletedCertificate = GetCertificate();
                 if (deletedCertificate == certificate)
                 {
                     //click on delete button
-                    IWebElement buttonDelete = driver.FindElement(By.XPath(xpValue));
                     buttonDelete.Click();
                 }
                 else
                 {
-                    Assert.Fail("Certificate is not matching certificate to be deleted");
+                    Assert.Fail("No matching certificate found.");
                 }
             }
             catch (Exception ex)
             {
-                Assert.Fail("No certificate is found", ex.Message);
+                Assert.Fail("No certificate is found.", ex.Message);
             }
         }
 
-        public string GetMessage(IWebDriver driver)
+        public string GetMessage()
         {
-            string messageXpath = "//div[@class='ns-box-inner']";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", messageXpath, 3);
-            IWebElement message = driver.FindElement(By.XPath(messageXpath));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_message, 3);
             return message.Text;
         }
-        public void ClickAnyTab(IWebDriver driver, string tab)
+        public void ClickOnTabCertifications()
         {
             //Wait for tabs to be visible
-            WaitHelpers.WaitToBeVisible(driver, "XPath", "//div[@class='ui top attached tabular menu']", 3);
-
-            //Specify a tab locator value
-            string locatorValue = "";
-            switch (tab)
-            {
-                case "Languages":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[1]";
-                    break;
-                case "Skills":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[2]";
-                    break;
-                case "Education":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[3]";
-                    break;
-                case "Certifications":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[4]";
-                    break;
-                default:
-                    Assert.Fail("No matching tab found.");
-                    break;
-            }
-
-            //Click on specified tab
-            IWebElement tabOption = driver.FindElement(By.XPath(locatorValue));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_tab, 3);
             tabOption.Click();
         }
 
     }
+
 }

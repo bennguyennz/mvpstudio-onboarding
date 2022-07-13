@@ -12,39 +12,33 @@ namespace Onboarding.StepDefinitions
     [Binding]
     public class SkillsStepDefinitions: CommonDriver
     {
-        [After]
-        public void Dispose()
-        {
-            if (driver != null)
-            {
-                driver.Close();
-            }
-        }
-
-        Skill SkillObj = new Skill();
+        Skill SkillObj;
+        LoginPage LoginPageObj;
 
         [Given(@"I logged into the portal successfully")]
         public void GivenILoggedIntoThePortalSuccessfully()
         {
             //Open Chrome browser
             driver = new ChromeDriver();
+            
+            //Initial skill obj and use the driver
+            SkillObj = new Skill(driver);
 
             //signin
-            LoginPage LoginPageObj = new LoginPage();
-            LoginPageObj.LogInActions(driver);
+            LoginPageObj = new LoginPage(driver);
+            LoginPageObj.LogInActions();
         }
-
 
         [When(@"I click on tab Skills")]
         public void WhenIClickOnTabSkills()
         {
-            SkillObj.ClickAnyTab(driver, "Skills");
+            SkillObj.ClickAnyTab("Skills");
         }
 
         [When(@"I add '([^']*)' at '([^']*)'")]
         public void WhenIAddAt(string skill, string skillLevel)
         {
-            SkillObj.AddSkill(driver, skill, skillLevel);
+            SkillObj.AddSkill(skill, skillLevel);
         }
 
         [Then(@"The '([^']*)' with '([^']*)'should be added successfully")]
@@ -52,12 +46,12 @@ namespace Onboarding.StepDefinitions
         {
             //assert message skill added successfully
             string assertMessage = skill + " has been added to your skills";
-            string addedMessage = SkillObj.GetMessage(driver);
+            string addedMessage = SkillObj.GetMessage();
             Assert.That(addedMessage == assertMessage, "Actual message and Expected message do not match.");
 
             //assert if skill and skill level has been added accordingly
-            string addedSkill = SkillObj.GetSkill(driver);
-            string addedSkillLevel = SkillObj.GetSkillLevel(driver);
+            string addedSkill = SkillObj.GetSkill();
+            string addedSkillLevel = SkillObj.GetSkillLevel();
 
             Assert.That(addedSkill == skill, "Actual skill and Expected skill do not match");
             Assert.That(addedSkillLevel == skillLevel, "Actual skill level and Expected skill level do not match");
@@ -66,7 +60,7 @@ namespace Onboarding.StepDefinitions
         [When(@"I edit last skill into '([^']*)' with '([^']*)'")]
         public void WhenIEditLasSkill(string skill, string skillLevel)
         {
-            SkillObj.EditSkill(driver, skill, skillLevel);
+            SkillObj.EditSkill(skill, skillLevel);
         }
 
         [Then(@"'([^']*)' with '([^']*)' should be edited successfully")]
@@ -74,12 +68,12 @@ namespace Onboarding.StepDefinitions
         {
             //Check if popup message is correct
             string assertMessage = skill + " has been updated to your skills";
-            string message = SkillObj.GetMessage(driver);
+            string message = SkillObj.GetMessage();
             Assert.That(message == assertMessage, "Actual message and Expected message do not match.");
 
             //Check if skill and skill level have been updated successfully
-            string editedSkill = SkillObj.GetSkill(driver);
-            string editedSkillLevel = SkillObj.GetSkillLevel(driver);
+            string editedSkill = SkillObj.GetSkill();
+            string editedSkillLevel = SkillObj.GetSkillLevel();
 
             Assert.That(editedSkill == skill, "Actual skill and Expected skill do not match.");
             Assert.That(editedSkillLevel == skillLevel, "Actual skill level and Expected skill level do not match.");
@@ -88,7 +82,7 @@ namespace Onboarding.StepDefinitions
         [When(@"I delete a '([^']*)'")]
         public void WhenIDeleteSkill(string skill)
         {
-            SkillObj.DeleteSkill(driver, skill);
+            SkillObj.DeleteSkill(skill);
         }
 
         [Then(@"The '([^']*)' should be deleted accordingly")]
@@ -96,12 +90,21 @@ namespace Onboarding.StepDefinitions
         {
             //Check if popup message is correct
             string assertMessage = skill + " has been deleted";
-            string message = SkillObj.GetMessage(driver);
+            string message = SkillObj.GetMessage();
             Assert.That(message == assertMessage, "Actual message and Expected message do not match.");
 
             //Check if skill has been deleted
-            string lastSkill = SkillObj.GetSkill(driver);
+            string lastSkill = SkillObj.GetSkill();
             Assert.That(lastSkill != skill, "Expected Skill has not been deleted successfully");
+        }
+
+        [After]
+        public void Dispose()
+        {
+            if (driver != null)
+            {
+                driver.Close();
+            }
         }
     }
  }

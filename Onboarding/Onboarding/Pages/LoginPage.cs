@@ -11,7 +11,14 @@ namespace Onboarding.Pages
 {
     public class LoginPage
     {
-        public void LogInActions(IWebDriver driver)
+        public IWebDriver driver;
+        LoginPage LoginPageObj;
+        public LoginPage(IWebDriver driver)
+        {
+            //initial driver object
+            this.driver = driver;
+        }
+        public void LogInActions()
         {
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://localhost:5000/");

@@ -13,15 +13,60 @@ namespace Onboarding.Pages.ProfilePages
 {
     public class Contact
     {
-        public string GetMessage(IWebDriver driver)
+        public IWebDriver driver;
+        Contact ContactObj;
+        public Contact(IWebDriver _driver)
         {
-            string messageXpath = "//div[@class='ns-box-inner']";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", messageXpath, 3);
-            IWebElement message = driver.FindElement(By.XPath(messageXpath));
+          this.driver = _driver;
+        }
+
+        public void ContactStepDefinitions()
+        {
+            ContactObj = new Contact(driver);
+        }
+
+        //Finding elements
+        private IWebElement message => driver.FindElement(By.XPath(e_message));
+        private IWebElement editNameDropdown => driver.FindElement(By.XPath(e_buttonEditName));
+        private IWebElement firstName => driver.FindElement(By.Name(e_firstName));
+        private IWebElement lastName => driver.FindElement(By.Name("lastName"));
+        private IWebElement buttonSave => driver.FindElement(By.XPath("//button[@class='ui teal button']"));
+        private IWebElement fullName => driver.FindElement(By.XPath(e_fullName));
+        private IWebElement buttonEditAvailabilityType => driver.FindElement(By.XPath("//div[@class='ui list']/div[2]/div/span/i"));
+        private IWebElement availibilityTypeDropdown => driver.FindElement(By.XPath(e_vailabilityTypeDropdown));
+        private IWebElement editAvailabilityHour => driver.FindElement(By.XPath("//div[@class='ui list']/div[3]/div/span/i"));
+        private IWebElement availibilityHourDropdown => driver.FindElement(By.XPath(e_availibilityHourDropdown));
+        private IWebElement editEarnTarget => driver.FindElement(By.XPath("//div[@class='ui list']/div[4]/div/span/i"));
+        private IWebElement availibilityTargetDropdown => driver.FindElement(By.XPath(e_availabilityTargetDropdown));
+        private IWebElement availabiltyType => driver.FindElement(By.XPath(e_availibilityType));
+        private IWebElement availabiltyHour => driver.FindElement(By.XPath(e_availibilityHour));
+        private IWebElement availabilityTarget => driver.FindElement(By.XPath(e_availibilityTarget));
+        private IWebElement descriptionButton => driver.FindElement(By.XPath(e_descriptionButton));
+        private IWebElement descriptionTextBox => driver.FindElement(By.XPath("//div[@class='field  ']/textarea"));
+        private IWebElement saveButton => driver.FindElement(By.XPath("//button[@type='button']"));
+        private IWebElement addedDescription => driver.FindElement(By.XPath(e_addedDescription));
+
+        //Wait elements
+        private string e_message = "//div[@class='ns-box-inner']";
+        private string e_buttonEditName = "//div[@class='title']/i[@class='dropdown icon']";
+        private string e_firstName = "firstName";
+        private string e_fullName = "//div[@class = 'title']";
+        private string e_vailabilityTypeDropdown = "//select[@name='availabiltyType']";
+        private string e_availibilityHourDropdown = "//select[@name='availabiltyHour']";
+        private string e_availabilityTargetDropdown = "//select[@name='availabiltyTarget']";
+        private string e_availibilityType = "//div[@class='ui list']/div[2]/div/span";
+        private string e_availibilityHour = "//div[@class='ui list']/div[3]/div/span";
+        private string e_availibilityTarget = "//div[@class='ui list']/div[4]/div/span";
+        private string e_descriptionButton = "//div[@class='content']/div/h3/span";
+        private string e_addedDescription = "//div[@class='ui fluid card']/div/div[1]/span";
+
+        public string GetMessage()
+        {
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_message, 3);
             return message.Text;
         }
 
-        public void EditMyContactDetails(IWebDriver driver, string strFirstName, string strLastName, string availability, string hour, string earnTarget)
+        public void EditMyContactDetails(string strFirstName, string strLastName, string availability, string hour, string earnTarget)
         {
             switch (availability)
             {
@@ -67,120 +112,97 @@ namespace Onboarding.Pages.ProfilePages
             }
 
             //wait for dropdown icon to be clickable
-            string xpValue = "//div[@class='title']/i[@class='dropdown icon']";
-            WaitHelpers.WaitToBeClickable(driver, "XPath", xpValue, 3);
+            WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonEditName, 3);
 
             //Click on dropdown icon before Full name
-            IWebElement dropdownIcon = driver.FindElement(By.XPath(xpValue));
-            dropdownIcon.Click();
+            editNameDropdown.Click();
 
             //Edit first name
-            string xpNameValue = "firstName";
-            WaitHelpers.WaitToBeClickable(driver, "Name", xpNameValue, 3);
-            IWebElement firstName = driver.FindElement(By.Name(xpNameValue));
+            WaitHelpers.WaitToBeClickable(driver, "Name", e_firstName, 3);
+ 
             firstName.Click();
             firstName.Clear();
             firstName.SendKeys(strFirstName);
 
             //edit last name
-            IWebElement lastName = driver.FindElement(By.Name("lastName"));
             lastName.Click();
             lastName.Clear();
             lastName.SendKeys(strLastName);
 
             //click Save
-            IWebElement buttonSave = driver.FindElement(By.XPath("//button[@class='ui teal button']"));
             buttonSave.Click();
 
             //Wait for Save completed and Name appears.
-            WaitHelpers.WaitToBeVisible(driver, "XPath", "//div[@class = 'title']", 3);
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_fullName, 3);
 
             //Click edit Availibility Type
             Actions action = new Actions(driver);
-            action.MoveToElement(driver.FindElement(By.XPath("//div[@class='ui list']/div[2]/div/span/i"))).Click().Build().Perform();
+            action.MoveToElement(buttonEditAvailabilityType).Click().Build().Perform();
 
             //Select type
-            string elementAvailabilityType = "//select[@name='availabiltyType']";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", elementAvailabilityType, 3);
-            var availabilityType = new SelectElement(driver.FindElement(By.XPath(elementAvailabilityType)));
+           
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_vailabilityTypeDropdown, 3);
+            var availabilityType = new SelectElement(availibilityTypeDropdown);
             availabilityType.SelectByValue(availability);
 
             //Click on edit Hours
-            IWebElement editAvailabilityHour = driver.FindElement(By.XPath("//div[@class='ui list']/div[3]/div/span/i"));
             editAvailabilityHour.Click();
 
             //Select hours
-            string elementAvailibilityHour = "//select[@name='availabiltyHour']";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", elementAvailibilityHour, 3);
-            var availabilityHour = new SelectElement(driver.FindElement(By.XPath(elementAvailibilityHour)));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_availibilityHourDropdown, 3);
+            var availabilityHour = new SelectElement(availibilityHourDropdown);
             availabilityHour.SelectByValue(hour);
 
             //Click on Edit Earn Targe
-            IWebElement editEarnTarget = driver.FindElement(By.XPath("//div[@class='ui list']/div[4]/div/span/i"));
             editEarnTarget.Click();
 
             //Select Earn Target
-            string elementAvailabilityTarget = "//select[@name='availabiltyTarget']";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", elementAvailabilityTarget, 3);
-            var availabiltyTarget = new SelectElement(driver.FindElement(By.XPath(elementAvailabilityTarget)));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_availabilityTargetDropdown, 3);
+            var availabiltyTarget = new SelectElement(availibilityTargetDropdown);
             availabiltyTarget.SelectByValue(earnTarget);
         }
 
-        public string GetFullName(IWebDriver driver)
+        public string GetFullName()
         {
-            string xpValue = "//div[@class='title']";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 3);
-            IWebElement fullName = driver.FindElement(By.XPath(xpValue));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_fullName, 3);
             return fullName.Text;
         }
 
-        public string GetAvailabilityType(IWebDriver driver)
+        public string GetAvailabilityType()
         {
-            string xpValue = "//div[@class='ui list']/div[2]/div/span";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 3);
-            IWebElement availabiltyType = driver.FindElement(By.XPath(xpValue));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_availibilityType, 3);
             return availabiltyType.Text;
         }
 
-        public string GetAvailityHour(IWebDriver driver)
+        public string GetAvailityHour()
         {
-            string xpValue = "//div[@class='ui list']/div[3]/div/span";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 3);
-            IWebElement availabiltyHour = driver.FindElement(By.XPath(xpValue));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_availibilityHour, 3);
             return availabiltyHour.Text;
         }
 
-        public string GetAvailityTarget(IWebDriver driver)
+        public string GetAvailityTarget()
         {
-            string xpValue = "//div[@class='ui list']/div[4]/div/span";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", xpValue, 3);
-            IWebElement availabiltyTarget = driver.FindElement(By.XPath(xpValue));
-            return availabiltyTarget.Text;
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_availibilityTarget, 3);
+            return availabilityTarget.Text;
         }
 
-        public void addDescription(IWebDriver driver)
+        public void addDescription()
         {
             //Click Decription
-            string XPathDescriptionButton = "//div[@class='content']/div/h3/span";
-            WaitHelpers.WaitToBeClickable(driver, "XPath", XPathDescriptionButton, 5);
-            IWebElement descriptionButton = driver.FindElement(By.XPath(XPathDescriptionButton));
+            WaitHelpers.WaitToBeClickable(driver, "XPath", e_descriptionButton, 5);
             descriptionButton.Click();
 
             //Enter description
-            IWebElement descriptionTextBox = driver.FindElement(By.XPath("//div[@class='field  ']/textarea"));
             descriptionTextBox.Click();
             descriptionTextBox.Clear();
             descriptionTextBox.SendKeys("I’m a motivated professional who is passionate about IT.");
 
             //Click SaveButton
-            IWebElement saveButton = driver.FindElement(By.XPath("//button[@type='button']"));
             saveButton.Click();
         }
-        public string GetAddedDesription(IWebDriver driver)
+        public string GetAddedDesription()
         {
-            string addedDescriptionXPath = "//div[@class='ui fluid card']/div/div[1]/span";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", addedDescriptionXPath, 3);
-            IWebElement addedDescription = driver.FindElement(By.XPath(addedDescriptionXPath));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_addedDescription, 3);
             return addedDescription.Text;
         }
     }
