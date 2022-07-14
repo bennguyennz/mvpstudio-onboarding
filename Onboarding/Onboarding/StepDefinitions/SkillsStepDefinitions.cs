@@ -15,17 +15,23 @@ namespace Onboarding.StepDefinitions
         Skill SkillObj;
         LoginPage LoginPageObj;
 
+        public SkillsStepDefinitions()
+        {
+            SkillObj = new Skill(driver);
+            LoginPageObj = new LoginPage(driver);
+        }
+
         [Given(@"I logged into the portal successfully")]
         public void GivenILoggedIntoThePortalSuccessfully()
         {
             //Open Chrome browser
             driver = new ChromeDriver();
-            
-            //Initial skill obj and use the driver
+
+            //Initiate objects
             SkillObj = new Skill(driver);
+            LoginPageObj = new LoginPage(driver);
 
             //signin
-            LoginPageObj = new LoginPage(driver);
             LoginPageObj.LogInActions();
         }
 
@@ -55,6 +61,7 @@ namespace Onboarding.StepDefinitions
 
             Assert.That(addedSkill == skill, "Actual skill and Expected skill do not match");
             Assert.That(addedSkillLevel == skillLevel, "Actual skill level and Expected skill level do not match");
+            driver.Close();
         }
 
         [When(@"I edit last skill into '([^']*)' with '([^']*)'")]
@@ -77,6 +84,7 @@ namespace Onboarding.StepDefinitions
 
             Assert.That(editedSkill == skill, "Actual skill and Expected skill do not match.");
             Assert.That(editedSkillLevel == skillLevel, "Actual skill level and Expected skill level do not match.");
+            driver.Close();
         }
 
         [When(@"I delete a '([^']*)'")]
@@ -96,15 +104,7 @@ namespace Onboarding.StepDefinitions
             //Check if skill has been deleted
             string lastSkill = SkillObj.GetSkill();
             Assert.That(lastSkill != skill, "Expected Skill has not been deleted successfully");
-        }
-
-        [After]
-        public void Dispose()
-        {
-            if (driver != null)
-            {
-                driver.Close();
-            }
+            driver.Close();
         }
     }
  }

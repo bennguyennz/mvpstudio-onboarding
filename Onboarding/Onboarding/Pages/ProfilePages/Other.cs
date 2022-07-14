@@ -23,10 +23,6 @@ namespace Onboarding.Pages.ProfilePages
             this.driver = _driver;
             
         }
-        public void OtherStepDefinitions()
-        {
-            OtherObj = new Other(driver);
-        }
 
         //Finding for elements
         private IWebElement welcomeText => driver.FindElement(By.XPath(e_wecomeText));

@@ -14,6 +14,11 @@ namespace Onboarding.StepDefinitions
     {
         Education EducationObj;
         LoginPage LoginPageObj;
+        public EducationStepDefinitions()
+        {
+            EducationObj = new Education(driver);
+            LoginPageObj = new LoginPage(driver);
+        }
 
         [Given(@"I logged into the portal")]
         public void GivenILoggedIntoThePortal()
@@ -21,11 +26,11 @@ namespace Onboarding.StepDefinitions
             //Open Chrome browser
             driver = new ChromeDriver();
 
-            //Initial EducationObj and use driver
+            //Initial objects
             EducationObj = new Education(driver);
+            LoginPageObj = new LoginPage(driver);
 
             //signin
-            LoginPageObj = new LoginPage(driver);
             LoginPageObj.LogInActions();
         }
 
@@ -68,6 +73,7 @@ namespace Onboarding.StepDefinitions
             //Check graduationYear
             string addedGraduationYear = EducationObj.GetGraduationYear();
             Assert.That(addedGraduationYear == graduationYear, "Actual graduation year and Expected graduation year do not match.");
+            driver.Close();
         }
 
         [When(@"I edit education including '([^']*)', '([^']*)', '([^']*)', '([^']*)', '([^']*)'")]
@@ -103,6 +109,7 @@ namespace Onboarding.StepDefinitions
             //Check graduationYear
             string updatedGraduationYear = EducationObj.GetGraduationYear();
             Assert.That(updatedGraduationYear == graduationYear, "Actual graduation year and Expected graduation year do not match.");
+            driver.Close();
         }
 
         [When(@"I delete education by '([^']*)'")]
@@ -122,15 +129,7 @@ namespace Onboarding.StepDefinitions
             //Check university is deleted successfully
             string deletedUniversity = EducationObj.GetUniversity();
             Assert.That(deletedUniversity != university, "University has not been deleted successfully");
-        }
-
-        [After]
-        public void Dispose()
-        {
-            if (driver != null)
-            {
-                driver.Close();
-            }
+            driver.Close();
         }
     }
 }

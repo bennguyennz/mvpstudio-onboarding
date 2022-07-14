@@ -14,14 +14,23 @@ namespace Onboarding.StepDefinitions
         Other OtherObj;
         LoginPage LoginPageObj;
 
+        public OtherStepDefinitions()
+        {
+            OtherObj = new Other(driver);
+            LoginPageObj = new LoginPage(driver);
+        }
+
         [Given(@"I signed into the portal successfully")]
         public void GivenISignedIntoThePortalSuccessfully()
         {
             //Open Chrome browser
             driver = new ChromeDriver();
+
+            //Initiate objects
             OtherObj = new Other(driver);
-            //signin
             LoginPageObj = new LoginPage(driver);
+            
+            //signin
             LoginPageObj.LogInActions();
         }
 
@@ -30,16 +39,7 @@ namespace Onboarding.StepDefinitions
         {
             string welcomeText = OtherObj.getWecomeText();
             Assert.That(welcomeText == "Hi Binh" | welcomeText == "Hi", "Actual welcome text and expected welcome text do not match");
+            driver.Close();
         }
-
-        [After]
-        public void Dispose()
-        {
-            if (driver != null)
-            {
-                driver.Close();
-            }
-        }
-
     }
 }

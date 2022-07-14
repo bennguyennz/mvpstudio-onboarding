@@ -20,14 +20,7 @@ namespace Onboarding.Pages.ProfilePages
         public Certification(IWebDriver _driver)
         {
             //initial driver object
-            this.driver = _driver;   
-        }
-
-        //Inintial object and link to constructor 1 by calling method
-        public void CertificationStepDefinitions()
-        {
-            //initial object
-            CertificationObj = new Certification(driver);
+            this.driver = _driver;
         }
 
         //Finding elements

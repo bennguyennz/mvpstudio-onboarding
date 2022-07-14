@@ -11,20 +11,24 @@ namespace Onboarding.StepDefinitions
     [Binding]
     public class ContactStepDefinitions : CommonDriver
     {
-
         Contact ContactObj;
         LoginPage LoginPageObj;
-        
-
+        public ContactStepDefinitions()
+        {
+            ContactObj = new Contact(driver);
+            LoginPageObj = new LoginPage(driver);
+        }
         [Given(@"I logged into the web portal successfully")]
         public void GivenILoggedIntoTheWebPortalSuccessfully()
         {
             //Open Chrome browser
             driver = new ChromeDriver();
+            
+            //initiate obj
             ContactObj = new Contact(driver);
+            LoginPageObj = new LoginPage(driver);
 
             //signin
-            LoginPageObj = new LoginPage(driver);
             LoginPageObj.LogInActions();
         }
 
@@ -41,6 +45,7 @@ namespace Onboarding.StepDefinitions
             Assert.That(message == "Description has been saved successfully", "Actual message and expected message do not match.");
             string addedDescription = ContactObj.GetAddedDesription();
             Assert.That(addedDescription == "I’m a motivated professional who is passionate about IT.", "Actual description and expected description does not match.");
+            driver.Close();
         }
 
         [When(@"I edit my contact details '([^']*)' '([^']*)' '([^']*)' '([^']*)' '([^']*)'")]
@@ -73,15 +78,8 @@ namespace Onboarding.StepDefinitions
             //Check Earn Targe
             string editedEarnTarget = ContactObj.GetAvailityTarget();
             Assert.That(editedEarnTarget == earnTarget, "Actual earn target and Expected earn target do not match.");
-        }
 
-        [After]
-        public void Dispose()
-        {
-            if (driver != null)
-            {
-                driver.Close();
-            }
+            driver.Close();
         }
     }
 }

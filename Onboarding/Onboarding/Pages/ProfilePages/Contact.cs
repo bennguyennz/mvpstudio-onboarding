@@ -20,11 +20,6 @@ namespace Onboarding.Pages.ProfilePages
           this.driver = _driver;
         }
 
-        public void ContactStepDefinitions()
-        {
-            ContactObj = new Contact(driver);
-        }
-
         //Finding elements
         private IWebElement message => driver.FindElement(By.XPath(e_message));
         private IWebElement editNameDropdown => driver.FindElement(By.XPath(e_buttonEditName));

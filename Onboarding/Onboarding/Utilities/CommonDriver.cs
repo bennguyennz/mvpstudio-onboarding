@@ -14,17 +14,15 @@ namespace Onboarding.Utilities
     public class CommonDriver
     {
         public IWebDriver driver;
-        
-        [OneTimeSetUp]
-        public void LoginActions()
+        LoginPage loginPageObj;
+        public CommonDriver()
         {
-            //Open Chrome browser
-            driver = new ChromeDriver();
-
-            //Signin
-            LoginPage loginPageObj = new LoginPage(driver);
-            loginPageObj.LogInActions();
+            loginPageObj = new LoginPage(driver);
         }
+
+
+        [OneTimeSetUp]
+
         [OneTimeTearDown]
         public void CloseTestRun()
         {

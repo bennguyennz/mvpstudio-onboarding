@@ -15,17 +15,23 @@ namespace Onboarding.StepDefinitions
         Language LanguageObj;
         LoginPage LoginPageObj;
 
+        public LanguageStepDefinitions()
+        {
+            LanguageObj = new Language(driver);
+            LoginPageObj = new LoginPage(driver);
+        }
+
         [Given(@"I signed in the portal")]
         public void GivenISignedInThePortal()
         {
             //Open Chrome browser
             driver = new ChromeDriver();
 
-            //
+            //Initiate objects
             LanguageObj = new Language(driver);
+            LoginPageObj = new LoginPage(driver);
 
             //signin
-            LoginPageObj = new LoginPage(driver);
             LoginPageObj.LogInActions();
         }
 
@@ -55,6 +61,7 @@ namespace Onboarding.StepDefinitions
             string addedLanguageLevel = LanguageObj.GetLanguageLevel();
             Assert.That(addedLanguage == language, "Actual language and Expected language do not match");
             Assert.That(addedLanguageLevel == languageLevel, "Actual language level and Expected language level do not match");
+            driver.Close();
         }
 
         [When(@"I edit the last '([^']*)' at a different '([^']*)'")]
@@ -76,6 +83,7 @@ namespace Onboarding.StepDefinitions
             string editedLanguageLevel = LanguageObj.GetLanguageLevel();
             Assert.That(editedLanguage == language, "Actual language and Expected language do not match");
             Assert.That(editedLanguageLevel == languageLevel, "Actual language level and Expected language level do not match");
+            driver.Close();
         }
 
         [When(@"I delete the last '([^']*)'")]
@@ -95,15 +103,7 @@ namespace Onboarding.StepDefinitions
             //check if language is deleted successfully
             string lastLanguage = LanguageObj.GetLanguage();
             Assert.That(lastLanguage != language, "Expected language has not been deleted.");
-        }
-        
-        [After]
-        public void Dispose()
-        {
-            if (driver != null)
-            {
-                driver.Close();
-            }
+            driver.Close();
         }
     }
 }

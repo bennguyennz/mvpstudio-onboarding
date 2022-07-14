@@ -18,10 +18,6 @@ namespace Onboarding.Pages.ProfilePages
         {
             this.driver = _driver;
         }
-        public void SkillsStepDefinition()
-        {
-            SkillObj = new Skill(driver);
-        }
 
         //Finding for elements
         private IWebElement message => driver.FindElement(By.XPath(e_message));
@@ -138,7 +134,7 @@ namespace Onboarding.Pages.ProfilePages
             }
             catch (Exception ex)
             {
-                Assert.Fail("No skill is found.");
+                Assert.Fail("No skill is found.",ex.Message);
             }
         }
 

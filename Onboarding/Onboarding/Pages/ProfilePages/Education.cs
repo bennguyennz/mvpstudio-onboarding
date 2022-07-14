@@ -19,11 +19,6 @@ namespace Onboarding.Pages.ProfilePages
             this.driver = _driver;
         }
 
-        public void EducationStepDefinitions()
-        {
-            EducationObj = new Education(driver);
-        }
-
         //Finding elements
         private IWebElement buttonAddEducation => driver.FindElement(By.XPath(e_buttonAdd));
         private IWebElement textboxUniversity => driver.FindElement(By.XPath("//input[@name='instituteName']"));

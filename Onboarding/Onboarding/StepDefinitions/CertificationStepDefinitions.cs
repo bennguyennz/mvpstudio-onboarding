@@ -10,11 +10,17 @@ using TechTalk.SpecFlow;
 namespace Onboarding.StepDefinitions
 {
     [Binding]
+    [TestFixture]
     public class CertificationStepDefinitions : CommonDriver
     {
         //Define Pages and Objects
         Certification CertificationObj;
         LoginPage LoginPageObj;
+
+        public CertificationStepDefinitions()
+        {
+            CertificationObj = new Certification(driver);
+        }
 
         [Given(@"I signed into the portal")]
         public void GivenISignedIntoThePortal()
@@ -60,6 +66,8 @@ namespace Onboarding.StepDefinitions
             //Check year
             string addedYear = CertificationObj.GetCertificationYear();
             Assert.That(addedYear == year, "Actual certification year and Expected certification year do not match.");
+
+            driver.Close();
         }
 
         [When(@"I edit a '([^']*)' '([^']*)' '([^']*)'")]
@@ -87,6 +95,7 @@ namespace Onboarding.StepDefinitions
             //check certification year
             string editedYear = CertificationObj.GetCertificationYear();
             Assert.That(editedYear == year, "Actual certification year and Expected certification year do not match.");
+            driver.Close();
         }
 
         [When(@"I delete '([^']*)'")]
@@ -106,15 +115,8 @@ namespace Onboarding.StepDefinitions
             //check certificate has been deleted successfully
             string deletedCertificate = CertificationObj.GetCertificate();
             Assert.That(deletedCertificate != certificate, "Certificate hasn't been deleted.");
-        }
 
-        [After]
-        public void Dispose()
-        {
-            if (driver != null)
-            {
-                driver.Close();
-            }
+            driver.Close();
         }
     }
 }

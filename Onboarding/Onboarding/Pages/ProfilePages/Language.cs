@@ -18,10 +18,6 @@ namespace Onboarding.Pages.ProfilePages
         { 
             this.driver = _driver;
         }
-        public void LanguageStepDefinitions()
-        {
-            LanguageObj = new Language(driver);
-        }
 
         //Finding elements
         private IWebElement addNewLanguageButton => driver.FindElement(By.XPath("//div[@data-tab='first']//div[@class ='ui teal button ']"));
