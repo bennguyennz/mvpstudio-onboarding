@@ -12,17 +12,13 @@ namespace Onboarding.StepDefinitions
     [Binding]
     public class EducationStepDefinitions : CommonDriver
     {
-
-        [After]
-        public void Dispose()
+        Education EducationObj;
+        LoginPage LoginPageObj;
+        public EducationStepDefinitions()
         {
-            if (driver != null)
-            {
-                driver.Close();
-            }
+            EducationObj = new Education(driver);
+            LoginPageObj = new LoginPage(driver);
         }
-
-        Education EducationObj = new Education();
 
         [Given(@"I logged into the portal")]
         public void GivenILoggedIntoThePortal()
@@ -30,22 +26,24 @@ namespace Onboarding.StepDefinitions
             //Open Chrome browser
             driver = new ChromeDriver();
 
-            //signin
-            LoginPage LoginPageObj = new LoginPage();
-            LoginPageObj.LogInActions(driver);
-        }
+            //Initial objects
+            EducationObj = new Education(driver);
+            LoginPageObj = new LoginPage(driver);
 
+            //signin
+            LoginPageObj.LogInActions();
+        }
 
         [When(@"I click on tab Education")]
         public void WhenIClickOnTabEducation()
         {
-            EducationObj.ClickAnyTab(driver, "Education");
+            EducationObj.ClickAnyTab("Education");
         }
 
         [When(@"I add my education including '([^']*)', '([^']*)', '([^']*)', '([^']*)', '([^']*)'")]
         public void WhenIAddMyEducationIncluding(string country, string university, string title, string degree, string graduationYear)
         {
-            EducationObj.AddEducation(driver, country, university, title, degree, graduationYear);
+            EducationObj.AddEducation(country, university, title, degree, graduationYear);
         }
 
         [Then(@"I am able to see my education details including '([^']*)', '([^']*)', '([^']*)', '([^']*)', '([^']*)'")]
@@ -53,34 +51,35 @@ namespace Onboarding.StepDefinitions
         {
             //Check if popup message is correct
             string assertMessage = "Education has been added";
-            string message = EducationObj.GetMessage(driver);
+            string message = EducationObj.GetMessage();
             Assert.That(message == assertMessage, "Actual message and Expected message do not match.");
 
             //Assert country
-            string addedCountry = EducationObj.GetCountry(driver);
+            string addedCountry = EducationObj.GetCountry();
             Assert.That(addedCountry == country, "Actual country and Expected country do not match.");
 
             //Check university
-            string addedUniversity = EducationObj.GetUniversity(driver);
+            string addedUniversity = EducationObj.GetUniversity();
             Assert.That(addedUniversity == university, "Actual university and Expected university do not match.");
 
             //Check title
-            string addedTitle = EducationObj.GetTitle(driver);
+            string addedTitle = EducationObj.GetTitle();
             Assert.That(addedTitle == title, "Actual title and Expected title do not match.");
 
             //check degree
-            string addedDegree = EducationObj.GetDegree(driver);
+            string addedDegree = EducationObj.GetDegree();
             Assert.That(addedDegree == degree, "Actual degree and Expected degree do not match.");
 
             //Check graduationYear
-            string addedGraduationYear = EducationObj.GetGraduationYear(driver);
+            string addedGraduationYear = EducationObj.GetGraduationYear();
             Assert.That(addedGraduationYear == graduationYear, "Actual graduation year and Expected graduation year do not match.");
+            driver.Close();
         }
 
         [When(@"I edit education including '([^']*)', '([^']*)', '([^']*)', '([^']*)', '([^']*)'")]
         public void WhenIEditEducationIncluding(string country, string university, string title, string degree, string graduationYear)
         {
-            EducationObj.EditEducation(driver, country, university, title, degree, graduationYear);
+            EducationObj.EditEducation(country, university, title, degree, graduationYear);
         }
 
         [Then(@"The education should be displayed as '([^']*)', '([^']*)', '([^']*)', '([^']*)', '([^']*)'")]
@@ -88,34 +87,35 @@ namespace Onboarding.StepDefinitions
         {
             //Check if popup message is correct
             string assertMessage = "Education as been updated";
-            string message = EducationObj.GetMessage(driver);
+            string message = EducationObj.GetMessage();
             Assert.That(message == assertMessage, "Actual message and Expected message do not match.");
 
             //Assert country
-            string updatedCountry = EducationObj.GetCountry(driver);
+            string updatedCountry = EducationObj.GetCountry();
             Assert.That(updatedCountry == country, "Actual country and Expected country do not match.");
 
             //Check university
-            string updatedUniversity = EducationObj.GetUniversity(driver);
+            string updatedUniversity = EducationObj.GetUniversity();
             Assert.That(updatedUniversity == university, "Actual university and Expected university do not match.");
 
             //Check title
-            string updatedTitle = EducationObj.GetTitle(driver);
+            string updatedTitle = EducationObj.GetTitle();
             Assert.That(updatedTitle == title, "Actual title and Expected title do not match.");
 
             //check degree
-            string updatedDegree = EducationObj.GetDegree(driver);
+            string updatedDegree = EducationObj.GetDegree();
             Assert.That(updatedDegree == degree, "Actual degree and Expected degree do not match.");
 
             //Check graduationYear
-            string updatedGraduationYear = EducationObj.GetGraduationYear(driver);
+            string updatedGraduationYear = EducationObj.GetGraduationYear();
             Assert.That(updatedGraduationYear == graduationYear, "Actual graduation year and Expected graduation year do not match.");
+            driver.Close();
         }
 
         [When(@"I delete education by '([^']*)'")]
         public void WhenIDeleteEducationByUniversity(string university)
         {
-            EducationObj.DeleteEducation(driver, university);
+            EducationObj.DeleteEducation(university);
         }
 
         [Then(@"The education by that '([^']*)' should be deleted successfully")]
@@ -123,12 +123,13 @@ namespace Onboarding.StepDefinitions
         {
             //Check if popup message is correct
             string assertMessage = "Education entry successfully removed";
-            string message = EducationObj.GetMessage(driver);
+            string message = EducationObj.GetMessage();
             Assert.That(message == assertMessage, "Actual message and Expected message do not match.");
 
             //Check university is deleted successfully
-            string deletedUniversity = EducationObj.GetUniversity(driver);
+            string deletedUniversity = EducationObj.GetUniversity();
             Assert.That(deletedUniversity != university, "University has not been deleted successfully");
+            driver.Close();
         }
     }
 }

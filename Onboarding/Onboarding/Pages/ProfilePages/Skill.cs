@@ -12,72 +12,75 @@ namespace Onboarding.Pages.ProfilePages
 {
     public class Skill
     {
-        public string GetMessage(IWebDriver driver)
+        public IWebDriver driver;
+        Skill SkillObj;
+        public Skill(IWebDriver _driver)
         {
-            string messageXpath = "//div[@class='ns-box-inner']";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", messageXpath, 3);
-            IWebElement message = driver.FindElement(By.XPath(messageXpath));
+            this.driver = _driver;
+        }
+
+        //Finding for elements
+        private IWebElement message => driver.FindElement(By.XPath(e_message));
+        private IWebElement tabOption => driver.FindElement(By.XPath("//div[@class = 'ui top attached tabular menu']/a[2]"));
+        private IWebElement buttonAddNew => driver.FindElement(By.XPath(e_buttonAddNew));
+        private IWebElement addSkill => driver.FindElement(By.XPath("//input[@name='name']"));
+        private IWebElement dropdownSkillLevel => driver.FindElement(By.XPath("//select[@name='level']"));
+        private IWebElement buttonCompleteAdd => driver.FindElement(By.XPath("//input[@value='Add']"));
+        private IWebElement skill => driver.FindElement(By.XPath("//div[@data-tab='second']//table/tbody[last()]/tr/td[1]"));
+        private IWebElement addedSkillLevel => driver.FindElement(By.XPath("//div[@data-tab='second']//table/tbody[last()]/tr/td[2]"));
+        private IWebElement buttonUpdate => driver.FindElement(By.XPath(e_buttonUpdate));
+        private IWebElement editSkill => driver.FindElement(By.XPath("//input[@placeholder='Add Skill']"));
+        private IWebElement buttonCompleteUpdate => driver.FindElement(By.XPath("//input[@value='Update']"));
+        private IWebElement deletedSkill => driver.FindElement(By.XPath(e_recordLastSkill));
+
+        //Elements for wait
+        private string e_message = "//div[@class='ns-box-inner']";
+        private string e_tab = "//div[@class='ui top attached tabular menu']";
+        private string e_buttonAddNew = "//div[@class='ui teal button']";
+        private string e_buttonUpdate = "//div[@data-tab='second']//table/tbody[last()]/tr/td[3]/span[1]";
+        private string e_recordLastSkill = "//div[@data-tab='second']//table/tbody[last()]/tr/td[1]";
+        private IWebElement buttonDelete => driver.FindElement(By.XPath("//div[@data-tab='second']//table/tbody[last()]/tr/td[3]/span[2]"));
+
+
+        public string GetMessage()
+        {
+
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_message, 3);
             return message.Text;
         }
-        public void ClickAnyTab(IWebDriver driver, string tab)
+        public void ClickAnyTab(string tab)
         {
             //Wait for tabs to be visible
-            WaitHelpers.WaitToBeVisible(driver, "XPath", "//div[@class='ui top attached tabular menu']", 3);
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_tab, 3);
 
-            //Specify a tab locator value
-            string locatorValue = "";
-            switch (tab)
-            {
-                case "Languages":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[1]";
-                    break;
-                case "Skills":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[2]";
-                    break;
-                case "Education":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[3]";
-                    break;
-                case "Certifications":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[4]";
-                    break;
-                default:
-                    Assert.Fail("No matching tab found.");
-                    break;
-            }
             //Click on specified tab
-            IWebElement tabOption = driver.FindElement(By.XPath(locatorValue));
             tabOption.Click();
         }
 
 
-        public void AddSkill(IWebDriver driver, string skill, string skillLevel)
+        public void AddSkill(string skill, string skillLevel)
         {
             //Wait Add new button to be visible
-            string xPathValue = "//div[@class='ui teal button']";
-            WaitHelpers.WaitToBeClickable(driver, "XPath", xPathValue, 3);
+            WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonAddNew, 3);
 
             //Click Add new
-            IWebElement buttonAddNew = driver.FindElement(By.XPath(xPathValue));
             buttonAddNew.Click();
 
             //Enter skill
-            IWebElement addSkill = driver.FindElement(By.XPath("//input[@name='name']"));
             addSkill.SendKeys(skill);
 
             //Select skill level
-            var selectDropdown = new SelectElement(driver.FindElement(By.XPath("//select[@name='level']")));
-            selectDropdown.SelectByValue(skillLevel);
+            var selectSkillLevel = new SelectElement(dropdownSkillLevel);
+            selectSkillLevel.SelectByValue(skillLevel);
 
             //Click add
-            IWebElement buttonAdd = driver.FindElement(By.XPath("//input[@value='Add']"));
-            buttonAdd.Click();
+            buttonCompleteAdd.Click();
         }
-        public string GetSkill(IWebDriver driver)
+        public string GetSkill()
         {
             //get last skill record 
             try
             {
-                IWebElement skill = driver.FindElement(By.XPath("//div[@data-tab='second']//table/tbody[last()]/tr/td[1]"));
                 return skill.Text;
             }
             catch (Exception)
@@ -85,54 +88,53 @@ namespace Onboarding.Pages.ProfilePages
                 return "locator not found";
             }
         }
-        public string GetSkillLevel(IWebDriver driver)
+        public string GetSkillLevel()
         {
             //Get last skill level record
-            IWebElement addedSkillLevel = driver.FindElement(By.XPath("//div[@data-tab='second']//table/tbody[last()]/tr/td[2]"));
             return addedSkillLevel.Text;
         }
 
-        public void EditSkill(IWebDriver driver, string skill, string skillLevel)
+        public void EditSkill(string skill, string skillLevel)
         {
             //Wait
-            string xpathValue = "//div[@data-tab='second']//table/tbody[last()]/tr/td[3]/span[1]";
-            WaitHelpers.WaitToBeClickable(driver, "XPath", xpathValue, 3);
+            WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonUpdate, 3);
 
             //Click edit button
-            IWebElement buttonUpdate = driver.FindElement(By.XPath(xpathValue));
             buttonUpdate.Click();
 
             //Edit Skills
-            IWebElement editSkill = driver.FindElement(By.XPath("//input[@placeholder='Add Skill']"));
             editSkill.Clear();
             editSkill.SendKeys(skill);
 
             //Edit Skill level
-            var selectDropDown = new SelectElement(driver.FindElement(By.XPath("//select[@name='level']")));
-            selectDropDown.SelectByValue(skillLevel);
+            var selectSkillLevel = new SelectElement(dropdownSkillLevel);
+            selectSkillLevel.SelectByValue(skillLevel);
 
             //Click Update
-            IWebElement btnUpdate = driver.FindElement(By.XPath("//input[@value='Update']"));
-            btnUpdate.Click();
+            buttonCompleteUpdate.Click();
         }
 
-        public void DeleteSkill(IWebDriver driver, string skill)
+        public void DeleteSkill(string skill)
         {
-            //Wait for Skill loaded
-            string xpValue = "//div[@data-tab='second']//table/tbody[last()]/tr/td[1]";
-            WaitHelpers.WaitToBeClickable(driver, "XPath", xpValue, 3);
+            try
+            {
+                //Wait for Skill loaded
+                WaitHelpers.WaitToBeVisible(driver, "XPath", e_recordLastSkill, 3);
 
-            //Check if skill is the one to be deleted
-            IWebElement deletedSkill = driver.FindElement(By.XPath(xpValue));
-            if (deletedSkill.Text == skill)
-            {
-                //Click Delete button
-                IWebElement buttonDelete = driver.FindElement(By.XPath("//div[@data-tab='second']//table/tbody[last()]/tr/td[3]/span[2]"));
-                buttonDelete.Click();
+                //Check if skill is the one to be deleted
+                if (deletedSkill.Text == skill)
+                {
+                    //Click Delete button
+                    buttonDelete.Click();
+                }
+                else
+                {
+                    Assert.Fail("No matching skill is not found.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Assert.Fail("Skill is not found");
+                Assert.Fail("No skill is found.",ex.Message);
             }
         }
 

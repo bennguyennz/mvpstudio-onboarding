@@ -12,141 +12,162 @@ namespace Onboarding.Pages.ProfilePages
 {
     public class Education
     {
-        public void AddEducation(IWebDriver driver, string country, string university, string title, string degree, string graduationYear)
+        public IWebDriver driver;
+        Education EducationObj;
+        public Education(IWebDriver _driver)
+        {
+            this.driver = _driver;
+        }
+
+        //Finding elements
+        private IWebElement buttonAddEducation => driver.FindElement(By.XPath(e_buttonAdd));
+        private IWebElement textboxUniversity => driver.FindElement(By.XPath("//input[@name='instituteName']"));
+        private IWebElement dropdownCountry => driver.FindElement(By.XPath("//select[@name='country']"));
+        private IWebElement dropdownTitle => driver.FindElement(By.XPath("//select[@name='title']"));
+        private IWebElement textboxDegree => driver.FindElement(By.XPath("//input[@name='degree']"));
+        private IWebElement dropdownYear => driver.FindElement(By.XPath("//select[@name='yearOfGraduation']"));
+        private IWebElement buttonSave => driver.FindElement(By.XPath("//input[@value='Add']"));
+        private IWebElement country => driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[1]"));
+        private IWebElement university => driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[2]"));
+        private IWebElement title => driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[3]"));
+        private IWebElement degree => driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[4]"));
+        private IWebElement graduationYear => driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[5]"));
+        private IWebElement buttonEdit => driver.FindElement(By.XPath(e_buttonEdit));
+        private IWebElement editedUniversity => driver.FindElement(By.XPath("//input[@placeholder='College/University Name']"));
+        private IWebElement editedDegree => driver.FindElement(By.XPath("//input[@placeholder='Degree']"));
+        private IWebElement buttonUpdate => driver.FindElement(By.XPath("//input[@value='Update']"));
+        private IWebElement buttonDelete => driver.FindElement(By.XPath(e_buttonDelete));
+        private IWebElement message => driver.FindElement(By.XPath(e_message));
+        private IWebElement tabOption => driver.FindElement(By.XPath("//div[@class = 'ui top attached tabular menu']/a[3]"));
+
+        //Element for waits
+        private string e_buttonAdd = "//div[@data-tab='third']//div[@class ='ui teal button ']";
+        private string e_buttonEdit = "//div[@data-tab='third']//table/tbody[last()]/tr/td[6]/span[1]";
+        private string e_buttonDelete = "//div[@data-tab='third']//table/tbody[last()]/tr/td[6]/span[2]";
+        private string e_message = "//div[@class='ns-box-inner']";
+        private string e_waitForTab = "//div[@class='ui top attached tabular menu']";
+
+
+        public void AddEducation(string country, string university, string title, string degree, string graduationYear)
         {
             //Wait for add new button to be visible
-            string xpValue = "//div[@data-tab='third']//div[@class ='ui teal button ']";
-            WaitHelpers.WaitToBeClickable(driver, "Xpath", xpValue, 3);
+            WaitHelpers.WaitToBeClickable(driver, "Xpath", e_buttonAdd, 3);
 
             //Click add new
-            IWebElement buttonAddEducation = driver.FindElement(By.XPath(xpValue));
             buttonAddEducation.Click();
 
             //Enter college/university name
-            IWebElement universityTextbox = driver.FindElement(By.XPath("//input[@name='instituteName']"));
-            universityTextbox.SendKeys(university);
+            textboxUniversity.SendKeys(university);
 
             //select country
-            var countryDropdown = new SelectElement(driver.FindElement(By.XPath("//select[@name='country']")));
-            countryDropdown.SelectByValue(country);
+            var selectCountry = new SelectElement(dropdownCountry);
+            selectCountry.SelectByValue(country);
 
             //Select title
-            var titleDropdown = new SelectElement(driver.FindElement(By.XPath("//select[@name='title']")));
-            titleDropdown.SelectByValue(title);
+            var selectTitle = new SelectElement(dropdownTitle);
+            selectTitle.SelectByValue(title);
 
             //Enter Degree
-            IWebElement degreeTextbox = driver.FindElement(By.XPath("//input[@name='degree']"));
-            degreeTextbox.SendKeys(degree);
+            textboxDegree.SendKeys(degree);
 
             //Select Year of graduation
-            var yearDropdown = new SelectElement(driver.FindElement(By.XPath("//select[@name='yearOfGraduation']")));
-            yearDropdown.SelectByValue(graduationYear);
+            var selectYear = new SelectElement(dropdownYear);
+            selectYear.SelectByValue(graduationYear);
 
             //Click save
-            IWebElement buttonSave = driver.FindElement(By.XPath("//input[@value='Add']"));
             buttonSave.Click();
         }
 
-        public string GetCountry(IWebDriver driver)
+        public string GetCountry()
         {
             try
             {
                 //Go to last record and get details
-                IWebElement country = driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[1]"));
                 return country.Text;
             }
             catch (Exception)
             {
-                return "locator not found";
+                return "Country element not found";
             }
         }
-        public string GetUniversity(IWebDriver driver)
+        public string GetUniversity()
         {
             try
             {
                 //Go to last record and get details
-                IWebElement university = driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[2]"));
                 return university.Text;
             }
             catch (Exception)
             {
-                return "locator not found";
+                return "University element not found";
             }
         }
-        public string GetTitle(IWebDriver driver)
+        public string GetTitle()
         {
             try
             {
                 //Go to last record and get details
-                IWebElement title = driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[3]"));
                 return title.Text;
             }
             catch (Exception)
             {
-                return "locator not found";
+                return "Title element not found";
             }
         }
-        public string GetDegree(IWebDriver driver)
+        public string GetDegree()
         {
             try
             {
                 //Go to last record and get details
-                IWebElement degree = driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[4]"));
                 return degree.Text;
             }
             catch (Exception)
             {
-                return "locator not found";
+                return "Degree element not found";
             }
         }
 
-        public string GetGraduationYear(IWebDriver driver)
+        public string GetGraduationYear()
         {
             try
             {
                 //Go to last record and get details
-                IWebElement graduationYear = driver.FindElement(By.XPath("//div[@data-tab='third']//table/tbody[last()]/tr/td[5]"));
                 return graduationYear.Text;
             }
             catch (Exception)
             {
-                return "locator not found";
+                return "Graduation Year element not found";
             }
         }
-        public void EditEducation(IWebDriver driver, string country, string university, string title, string degree, string graduationYear)
+        public void EditEducation(string country, string university, string title, string degree, string graduationYear)
         {
             try
             {
                 //go to last record and click on edit button
-                string xpValue = "//div[@data-tab='third']//table/tbody[last()]/tr/td[6]/span[1]";
-                WaitHelpers.WaitToBeClickable(driver, "XPath", xpValue, 3);
-                IWebElement buttonEdit = driver.FindElement(By.XPath(xpValue));
+                WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonEdit, 3);
                 buttonEdit.Click();
 
                 //I edit university
-                IWebElement editedUniversity = driver.FindElement(By.XPath("//input[@placeholder='College/University Name']"));
                 editedUniversity.Clear();
                 editedUniversity.SendKeys(university);
 
                 //I edit country
-                var editedCountry = new SelectElement(driver.FindElement(By.XPath("//select[@name='country']")));
-                editedCountry.SelectByValue(country);
+                var selectCountry = new SelectElement(dropdownCountry);
+                selectCountry.SelectByValue(country);
 
                 //I edit title
-                var editedTitle = new SelectElement(driver.FindElement(By.XPath("//select[@name='title']")));
-                editedTitle.SelectByValue(title);
+                var selectTitle = new SelectElement(dropdownTitle);
+                selectTitle.SelectByValue(title);
 
                 //edit degree
-                IWebElement editedDegree = driver.FindElement(By.XPath("//input[@placeholder='Degree']"));
                 editedDegree.Clear();
                 editedDegree.SendKeys(degree);
 
                 //edit graduation year
-                var editedGraduationYear = new SelectElement(driver.FindElement(By.XPath("//select[@name='yearOfGraduation']")));
-                editedGraduationYear.SelectByValue(graduationYear);
+                var selectGraduationYear = new SelectElement(dropdownYear);
+                selectGraduationYear.SelectByValue(graduationYear);
 
                 //Click update button
-                IWebElement buttonUpdate = driver.FindElement(By.XPath("//input[@value='Update']"));
                 buttonUpdate.Click();
             }
             catch (Exception ex)
@@ -155,68 +176,42 @@ namespace Onboarding.Pages.ProfilePages
             }
         }
 
-        public void DeleteEducation(IWebDriver driver, string university)
+        public void DeleteEducation(string university)
         {
             try
             {
                 //wait for button delete
-                string xpValue = "//div[@data-tab='third']//table/tbody[last()]/tr/td[6]/span[2]";
-                WaitHelpers.WaitToBeClickable(driver, "XPath", xpValue, 3);
+                WaitHelpers.WaitToBeClickable(driver, "XPath", e_buttonDelete, 3);
 
                 //Check if university is matching the university to be deleted
-                string deletedUniversity = GetUniversity(driver);
+                string deletedUniversity = GetUniversity();
                 if (deletedUniversity == university)
                 {
                     //click on delete button
-                    IWebElement buttonDelete = driver.FindElement(By.XPath(xpValue));
                     buttonDelete.Click();
                 }
                 else
                 {
-                    Assert.Fail("Country is not matching country to be deleted");
+                    Assert.Fail("No matching country found.");
                 }
             }
             catch (Exception ex)
             {
-                Assert.Fail("No country is found", ex.Message);
+                Assert.Fail("No country is found.", ex.Message);
             }
         }
 
-        public string GetMessage(IWebDriver driver)
+        public string GetMessage()
         {
-            string messageXpath = "//div[@class='ns-box-inner']";
-            WaitHelpers.WaitToBeVisible(driver, "XPath", messageXpath, 3);
-            IWebElement message = driver.FindElement(By.XPath(messageXpath));
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_message, 3);
             return message.Text;
         }
-        public void ClickAnyTab(IWebDriver driver, string tab)
+        public void ClickAnyTab(string tab)
         {
             //Wait for tabs to be visible
-            WaitHelpers.WaitToBeVisible(driver, "XPath", "//div[@class='ui top attached tabular menu']", 3);
-
-            //Specify a tab locator value
-            string locatorValue = "";
-            switch (tab)
-            {
-                case "Languages":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[1]";
-                    break;
-                case "Skills":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[2]";
-                    break;
-                case "Education":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[3]";
-                    break;
-                case "Certifications":
-                    locatorValue = "//div[@class = 'ui top attached tabular menu']/a[4]";
-                    break;
-                default:
-                    Assert.Fail("No matching tab found.");
-                    break;
-            }
+            WaitHelpers.WaitToBeVisible(driver, "XPath", e_waitForTab, 3);
 
             //Click on specified tab
-            IWebElement tabOption = driver.FindElement(By.XPath(locatorValue));
             tabOption.Click();
         }
     }
