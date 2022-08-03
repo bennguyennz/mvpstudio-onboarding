@@ -8,6 +8,7 @@ using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
 using Onboarding.Utilities;
 using OpenQA.Selenium.Interactions;
+using static Onboarding.Utilities.CommonDriver;
 
 
 namespace Onboarding.Pages.ProfilePages
@@ -15,21 +16,13 @@ namespace Onboarding.Pages.ProfilePages
 
     public class Other
     {
-        public IWebDriver driver;
         Other OtherObj;
-
-        public Other(IWebDriver _driver)
-        {
-            this.driver = _driver;
-            
-        }
 
         //Finding for elements
         private IWebElement welcomeText => driver.FindElement(By.XPath(e_wecomeText));
 
         //element for wait
         private string e_wecomeText = "/html/body/div[1]/div/div[1]/div[2]/div/span";
-
 
         public string getWecomeText()
         {

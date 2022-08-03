@@ -7,17 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Onboarding.Utilities.CommonDriver;
 
 namespace Onboarding.Pages.ProfilePages
 {
     public class Education
     {
-        public IWebDriver driver;
         Education EducationObj;
-        public Education(IWebDriver _driver)
-        {
-            this.driver = _driver;
-        }
 
         //Finding elements
         private IWebElement buttonAddEducation => driver.FindElement(By.XPath(e_buttonAdd));

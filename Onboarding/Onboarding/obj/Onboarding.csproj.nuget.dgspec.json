@@ -44,6 +44,14 @@
               "target": "Package",
               "version": "[3.11.0, )"
             },
+            "ExtentReports": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "ExtentReports.Core": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[17.2.0, )"
@@ -71,6 +79,10 @@
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
               "version": "[103.0.5060.5300, )"
+            },
+            "SeleniumNUnitSpecflow": {
+              "target": "Package",
+              "version": "[1.0.4, )"
             },
             "SpecFlow": {
               "target": "Package",

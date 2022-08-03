@@ -15,12 +15,6 @@ namespace Onboarding.StepDefinitions
         Language LanguageObj;
         LoginPage LoginPageObj;
 
-        public LanguageStepDefinitions()
-        {
-            LanguageObj = new Language(driver);
-            LoginPageObj = new LoginPage(driver);
-        }
-
         [Given(@"I signed in the portal")]
         public void GivenISignedInThePortal()
         {
@@ -28,8 +22,8 @@ namespace Onboarding.StepDefinitions
             driver = new ChromeDriver();
 
             //Initiate objects
-            LanguageObj = new Language(driver);
-            LoginPageObj = new LoginPage(driver);
+            LanguageObj = new Language();
+            LoginPageObj = new LoginPage();
 
             //signin
             LoginPageObj.LogInActions();

@@ -14,11 +14,6 @@ namespace Onboarding.StepDefinitions
     {
         Education EducationObj;
         LoginPage LoginPageObj;
-        public EducationStepDefinitions()
-        {
-            EducationObj = new Education(driver);
-            LoginPageObj = new LoginPage(driver);
-        }
 
         [Given(@"I logged into the portal")]
         public void GivenILoggedIntoThePortal()
@@ -27,8 +22,8 @@ namespace Onboarding.StepDefinitions
             driver = new ChromeDriver();
 
             //Initial objects
-            EducationObj = new Education(driver);
-            LoginPageObj = new LoginPage(driver);
+            EducationObj = new Education();
+            LoginPageObj = new LoginPage();
 
             //signin
             LoginPageObj.LogInActions();

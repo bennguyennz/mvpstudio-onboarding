@@ -7,17 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Onboarding.Utilities.CommonDriver;
 
 namespace Onboarding.Pages.ProfilePages
 {
     public class Language
     {
-        public IWebDriver driver;
         Language LanguageObj;
-        public Language(IWebDriver _driver)
-        { 
-            this.driver = _driver;
-        }
 
         //Finding elements
         private IWebElement addNewLanguageButton => driver.FindElement(By.XPath("//div[@data-tab='first']//div[@class ='ui teal button ']"));

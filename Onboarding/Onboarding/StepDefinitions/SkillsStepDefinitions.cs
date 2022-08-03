@@ -15,12 +15,6 @@ namespace Onboarding.StepDefinitions
         Skill SkillObj;
         LoginPage LoginPageObj;
 
-        public SkillsStepDefinitions()
-        {
-            SkillObj = new Skill(driver);
-            LoginPageObj = new LoginPage(driver);
-        }
-
         [Given(@"I logged into the portal successfully")]
         public void GivenILoggedIntoThePortalSuccessfully()
         {
@@ -28,8 +22,8 @@ namespace Onboarding.StepDefinitions
             driver = new ChromeDriver();
 
             //Initiate objects
-            SkillObj = new Skill(driver);
-            LoginPageObj = new LoginPage(driver);
+            SkillObj = new Skill();
+            LoginPageObj = new LoginPage();
 
             //signin
             LoginPageObj.LogInActions();
