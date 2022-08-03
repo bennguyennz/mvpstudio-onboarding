@@ -14,12 +14,6 @@ namespace Onboarding.StepDefinitions
         Other OtherObj;
         LoginPage LoginPageObj;
 
-        public OtherStepDefinitions()
-        {
-            OtherObj = new Other(driver);
-            LoginPageObj = new LoginPage(driver);
-        }
-
         [Given(@"I signed into the portal successfully")]
         public void GivenISignedIntoThePortalSuccessfully()
         {
@@ -27,8 +21,8 @@ namespace Onboarding.StepDefinitions
             driver = new ChromeDriver();
 
             //Initiate objects
-            OtherObj = new Other(driver);
-            LoginPageObj = new LoginPage(driver);
+            OtherObj = new Other();
+            LoginPageObj = new LoginPage();
             
             //signin
             LoginPageObj.LogInActions();

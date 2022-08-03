@@ -6,18 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using static Onboarding.Utilities.CommonDriver;
 
 namespace Onboarding.Pages
 {
     public class LoginPage
     {
-        public IWebDriver driver;
+
         LoginPage LoginPageObj;
-        public LoginPage(IWebDriver driver)
-        {
-            //initial driver object
-            this.driver = driver;
-        }
+
         public void LogInActions()
         {
             driver.Manage().Window.Maximize();

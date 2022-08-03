@@ -7,21 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Onboarding.Utilities.CommonDriver;
 
 namespace Onboarding.Pages.ProfilePages
 {
     public class Certification
     {
         //Define class with two objects
-        public IWebDriver driver;
         Certification CertificationObj;
 
-        //Form constructor 1
-        public Certification(IWebDriver _driver)
-        {
-            //initial driver object
-            this.driver = _driver;
-        }
 
         //Finding elements
         private IWebElement buttonAddNew => driver.FindElement(By.XPath(e_buttonAddNew));

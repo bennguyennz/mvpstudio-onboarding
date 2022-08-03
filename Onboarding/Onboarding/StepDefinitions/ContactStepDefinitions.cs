@@ -13,11 +13,7 @@ namespace Onboarding.StepDefinitions
     {
         Contact ContactObj;
         LoginPage LoginPageObj;
-        public ContactStepDefinitions()
-        {
-            ContactObj = new Contact(driver);
-            LoginPageObj = new LoginPage(driver);
-        }
+
         [Given(@"I logged into the web portal successfully")]
         public void GivenILoggedIntoTheWebPortalSuccessfully()
         {
@@ -25,8 +21,8 @@ namespace Onboarding.StepDefinitions
             driver = new ChromeDriver();
             
             //initiate obj
-            ContactObj = new Contact(driver);
-            LoginPageObj = new LoginPage(driver);
+            ContactObj = new Contact();
+            LoginPageObj = new LoginPage();
 
             //signin
             LoginPageObj.LogInActions();

@@ -7,17 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Onboarding.Utilities.CommonDriver;
 
 namespace Onboarding.Pages.ProfilePages
 {
     public class Skill
     {
-        public IWebDriver driver;
         Skill SkillObj;
-        public Skill(IWebDriver _driver)
-        {
-            this.driver = _driver;
-        }
 
         //Finding for elements
         private IWebElement message => driver.FindElement(By.XPath(e_message));

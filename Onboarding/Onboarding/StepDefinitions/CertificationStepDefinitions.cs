@@ -10,27 +10,22 @@ using TechTalk.SpecFlow;
 namespace Onboarding.StepDefinitions
 {
     [Binding]
-    [TestFixture]
+
     public class CertificationStepDefinitions : CommonDriver
     {
         //Define Pages and Objects
         Certification CertificationObj;
         LoginPage LoginPageObj;
 
-        public CertificationStepDefinitions()
-        {
-            CertificationObj = new Certification(driver);
-        }
-
         [Given(@"I signed into the portal")]
         public void GivenISignedIntoThePortal()
         {
             //Open Chrome browser
             driver = new ChromeDriver();
-            CertificationObj = new Certification(driver);
+            CertificationObj = new Certification();
 
             //signin
-            LoginPageObj = new LoginPage(driver);
+            LoginPageObj = new LoginPage();
             LoginPageObj.LogInActions();
         }
 
@@ -95,6 +90,7 @@ namespace Onboarding.StepDefinitions
             //check certification year
             string editedYear = CertificationObj.GetCertificationYear();
             Assert.That(editedYear == year, "Actual certification year and Expected certification year do not match.");
+            
             driver.Close();
         }
 
