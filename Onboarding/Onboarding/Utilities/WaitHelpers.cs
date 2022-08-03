@@ -10,6 +10,7 @@ namespace Onboarding.Utilities
 {
     public class WaitHelpers
     {
+        //public static IWebDriver driver;
         // Generic function to wait for element to be clickable
         public static void WaitToBeClickable(IWebDriver driver, string locator, string locatorValue, int seconds)
         {

@@ -6,12 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using static Onboarding.Utilities.CommonDriver;
 
 namespace Onboarding.Pages
 {
     public class LoginPage
     {
-        public void LogInActions(IWebDriver driver)
+
+        LoginPage LoginPageObj;
+
+        public void LogInActions()
         {
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://localhost:5000/");

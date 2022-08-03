@@ -7,26 +7,27 @@ using System.Threading.Tasks;
 using Onboarding.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
+using TechTalk.SpecFlow;
 
 namespace Onboarding.Utilities
 {
     [TestFixture]
+    [Binding]
     public class CommonDriver
     {
-        public IWebDriver driver;
+        [ThreadStatic]
+        public static IWebDriver driver;
 
-        LoginPage loginPageObj = new LoginPage();
         [OneTimeSetUp]
-        public void LoginActions()
+        public void SetUp()
         {
-            //open chrome browser
             driver = new ChromeDriver();
-            loginPageObj.LogInActions(driver);
         }
+
         [OneTimeTearDown]
-        public void CloseTestRun()
+        public void TearDown()
         {
-            driver.Quit();
+            driver.Close();
         }
 
     }
