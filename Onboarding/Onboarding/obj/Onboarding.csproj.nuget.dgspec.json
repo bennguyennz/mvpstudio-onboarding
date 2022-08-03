@@ -80,10 +80,6 @@
               "target": "Package",
               "version": "[103.0.5060.5300, )"
             },
-            "SeleniumNUnitSpecflow": {
-              "target": "Package",
-              "version": "[1.0.4, )"
-            },
             "SpecFlow": {
               "target": "Package",
               "version": "[3.9.74, )"

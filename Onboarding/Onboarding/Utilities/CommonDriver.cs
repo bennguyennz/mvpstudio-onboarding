@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 using Onboarding.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
-using TechTalk.SpecFlow;
 
 namespace Onboarding.Utilities
 {
     [TestFixture]
-    [Binding]
     public class CommonDriver
     {
         [ThreadStatic]

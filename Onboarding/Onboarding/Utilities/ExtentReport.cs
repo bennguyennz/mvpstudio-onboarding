@@ -19,9 +19,7 @@ namespace Onboarding.Utilities
         static AventStack.ExtentReports.ExtentTest feature;
         AventStack.ExtentReports.ExtentTest scenario, step;
 
-        static string reportpath = System.IO.Directory.GetParent(@"../../../").FullName
-            + Path.DirectorySeparatorChar + "TestReport"
-            + Path.DirectorySeparatorChar + "Report_" + DateTime.Now.ToString("dd-MM-yyyy HHmmss") + Path.DirectorySeparatorChar;
+        static string ReportPath = @"C:\Users\windows\Documents\mvpstudio-onboarding\Onboarding\Onboarding\TestReport\";
 
         //static ExtentKlovReporter klovreport;
         //public static ConfigSetting config;
@@ -40,7 +38,8 @@ namespace Onboarding.Utilities
             //configuration.Bind(config);
 
 
-            ExtentHtmlReporter htmlreport = new ExtentHtmlReporter(reportpath);
+            ExtentHtmlReporter htmlreport = new ExtentHtmlReporter(ReportPath + "ExtentReport" + 
+                DateTime.Now.ToString("_ddMMyyyy_HHmmss") + ".html");
             extent = new AventStack.ExtentReports.ExtentReports();
 
             //klovreport = new ExtentKlovReporter();

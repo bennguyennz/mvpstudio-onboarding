@@ -1823,15 +1823,6 @@
           "build/Selenium.WebDriver.ChromeDriver.targets": {}
         }
       },
-      "SeleniumNUnitSpecflow/1.0.4": {
-        "type": "package",
-        "dependencies": {
-          "Selenium.Support": "2.39.0",
-          "Selenium.WebDriver": "2.39.0",
-          "SpecFlow": "1.9.0",
-          "SpecFlow.NUnit": "1.1.1"
-        }
-      },
       "SharpCompress/0.23.0": {
         "type": "package",
         "dependencies": {
@@ -6031,24 +6022,6 @@
         "nupkg-icon.png",
         "selenium.webdriver.chromedriver.103.0.5060.5300.nupkg.sha512",
         "selenium.webdriver.chromedriver.nuspec"
-      ]
-    },
-    "SeleniumNUnitSpecflow/1.0.4": {
-      "sha512": "CYLTN4dmG22mj2Dw3XpzxaTOU6jWB2Du7aSJtV1HDMYZXT1KcDdFNR6wXiz5hTr7c07KOOyDc8I2D4LuJttyDg==",
-      "type": "package",
-      "path": "seleniumnunitspecflow/1.0.4",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "content/App.config.transform",
-        "content/Features/US001_GoogleSearch.feature",
-        "content/Steps/US001_GoogleSearchSteps.cs.pp",
-        "content/Support/SeleniumController.cs",
-        "content/Support/SeleniumStepsBase.cs",
-        "content/Support/SeleniumSupport.cs",
-        "content/Support/WebDriverExtensions.cs",
-        "seleniumnunitspecflow.1.0.4.nupkg.sha512",
-        "seleniumnunitspecflow.nuspec"
       ]
     },
     "SharpCompress/0.23.0": {
@@ -10925,7 +10898,6 @@
       "Selenium.Support >= 4.3.0",
       "Selenium.WebDriver >= 4.3.0",
       "Selenium.WebDriver.ChromeDriver >= 103.0.5060.5300",
-      "SeleniumNUnitSpecflow >= 1.0.4",
       "SpecFlow >= 3.9.74",
       "SpecFlow.NUnit >= 3.9.74",
       "SpecFlow.Tools.MsBuild.Generation >= 3.9.74"
@@ -11009,10 +10981,6 @@
           "Selenium.WebDriver.ChromeDriver": {
             "target": "Package",
             "version": "[103.0.5060.5300, )"
-          },
-          "SeleniumNUnitSpecflow": {
-            "target": "Package",
-            "version": "[1.0.4, )"
           },
           "SpecFlow": {
             "target": "Package",
